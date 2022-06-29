@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(25, 25, 25);
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Testing public folder</h1>
+
+    <button id="rzp-button1">Pay</button>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+const rpbutton = document.getElementById('rzp-button1')
+
+rpbutton.addEventListener('click', async(event) => {
+    const response = await fetch('/order', {
+        method: "POST",
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({amount: 500})
+    })
+
+    const convertReponse = await response.json()
+
+    const {order} = convertReponse;
+
+    var options = {
+    key: "rzp_test_DfhbmLCnKJDWxO", // Enter the Key ID generated from the Dashboard
+    amount: 50000, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    currency: "INR",
+    
+    order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    handler: function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+    },
+   
+};
+
+var rzp1 = new Razorpay(options);
+
+rzp1.open()
+})
+
+
+
+
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,236 @@
+openapi: "3.0.0"
+info:
+  title: learn express and swagger - LearnCodeOnline
+  description: LCO - a course segment about writing docs
+  version: 1.1.0
+  contact:
+    email: hitesh@google.com
+    url: "https://lco.dev"
+
+# servers:
+#   - url: "https://localhost:4000/api/v1"
+#     description: for local host - secure
+#   - url: "http://localhost:4000/api/v1"
+#     description: for local host - regular
+
+servers:
+  - url: "{protocol}://localhost:4000/api/{version}"
+    description: for local host 
+    variables:
+      version:
+        enum:
+          - v1
+          - v2
+        default: v1
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /lco:
+    get:
+      tags:
+        - String
+      summary: returns a greet message from LCO
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  
+  /lcoobject:
+    get:
+      tags:
+        - Object
+      summary: returns a unique course 
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /courses:
+    get:
+      tags:
+        - Array
+      summary: returns all courses
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: number
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+  /mycourse/{courseId}:
+    get:
+      tags:
+        - String
+      summary: returns course based on request id
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          default: 22
+          schema:
+            type: string
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /addCourse:
+    post:
+      tags:
+        - String
+      summary: adds a new course to existing courses
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                price:
+                  type: number
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /coursequery:
+    get:
+      tags:
+        - String
+      summary: trying to learn about query
+      parameters:
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [delhi, london, jaipur]
+        - name: device
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [web, mobile]
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                  device:
+                    type: string
+                
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  /courseupload:
+    post:
+      tags:
+        - String
+      summary: uploading course image
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: All good success
+              
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+

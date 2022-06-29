@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Social App
+  description: Our fist Social app at LCO - Hitesh
+  version: 1.0.1
+
+servers:
+  - url: http://localhost:4000/api/v1
+    description: localhost version of our app
+  - url: https://localhost:4000/api/v1
+    description: this is just a dummy api url, it doesn't work
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /instagram:
+    get:
+      summary: returns username, followers and follows
+      responses:
+        '200': # status code
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  followers:
+                    type: string
+                  follows:
+                    type: string
+    post:
+      summary: returns username, followers and follows
+      responses:
+        '200': # status code
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  followers:
+                    type: string
+                  follows:
+                    type: string
+  /{token}:
+    get:
+      summary: returns whatever is there in parameters
+      parameters:
+        - name: token
+          default: 5
+          in: path
+          schema:
+            type: string
+      responses:
+        '200': # status code
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  params:
+                    type: string
+                  

@@ -4,7 +4,7 @@
 
 [CoderCommunity](https://web.codercommunity.io)
 
-[Website](https://hiteshchoudahry.com)
+[Website](https://hiteshchoudhary.com)
 
 [Instagram](https://instagram.com/hiteshchoudharyofficial)
 
